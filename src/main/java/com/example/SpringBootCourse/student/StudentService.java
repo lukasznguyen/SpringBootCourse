@@ -25,4 +25,8 @@ public class StudentService {
     public Student getStudent(Long id) {
         return students.stream().filter(student -> student.getId().equals(id)).findFirst().get();
     }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
 }
