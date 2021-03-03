@@ -29,4 +29,14 @@ public class StudentService {
     public void addStudent(Student student) {
         students.add(student);
     }
+
+    public void updateStudent(Long id, Student updatedStudent) {
+        for(int i=0; i<students.size(); i++) {
+            Student st = students.get(i);
+            if(st.getId().equals(id)) {
+                students.set(i, updatedStudent);
+                return;
+            }
+        }
+    }
 }

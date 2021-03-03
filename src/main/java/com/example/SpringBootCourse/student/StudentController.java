@@ -29,7 +29,12 @@ public class StudentController {
     }
 
     @PostMapping("api/students")
-    public void addStudent(@RequestBody Student student) {
-        studentService.addStudent(student);
+    public void addStudent(@RequestBody Student newStudent) {
+        studentService.addStudent(newStudent);
+    }
+
+    @PutMapping("api/students/{id}")
+    public void updateStudent(@PathVariable Long id, @RequestBody Student updatedStudent) {
+        studentService.updateStudent(id, updatedStudent);
     }
 }
