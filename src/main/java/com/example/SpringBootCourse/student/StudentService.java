@@ -39,4 +39,8 @@ public class StudentService {
             }
         }
     }
+
+    public void deleteStudent(Long id) {
+        students.removeIf(student -> student.getId().equals(id));
+    }
 }
