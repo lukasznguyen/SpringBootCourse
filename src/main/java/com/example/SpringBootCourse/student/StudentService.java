@@ -1,5 +1,7 @@
 package com.example.SpringBootCourse.student;
 
+import org.aspectj.weaver.ArrayReferenceType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,36 +13,32 @@ import java.util.List;
 @Service
 public class StudentService {
 
-    private List<Student> students = new ArrayList<>(Arrays.asList(
-            new Student(1L, "Luke", "Skywalker", LocalDate.of(1999, Month.JANUARY, 1)),
-            new Student(2L, "Obiwan", "Kenobi", LocalDate.of(1990, Month.DECEMBER, 15)),
-            new Student(3L, "Han", "Solo", LocalDate.of(1995, Month.JUNE, 30))
-    ));
+    private StudentRepository studentRepository;
 
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public List<Student> getStudents() {
+        List<Student> students = new ArrayList<>();
+        studentRepository.findAll().forEach(students::add);
         return students;
     }
 
     public Student getStudent(Long id) {
-        return students.stream().filter(student -> student.getId().equals(id)).findFirst().get();
+        return studentRepository.findById(id).get();
     }
 
     public void addStudent(Student student) {
-        students.add(student);
+        studentRepository.save(student);
     }
 
     public void updateStudent(Long id, Student updatedStudent) {
-        for(int i=0; i<students.size(); i++) {
-            Student st = students.get(i);
-            if(st.getId().equals(id)) {
-                students.set(i, updatedStudent);
-                return;
-            }
-        }
+        studentRepository.save(updatedStudent);
     }
 
     public void deleteStudent(Long id) {
-        students.removeIf(student -> student.getId().equals(id));
+        studentRepository.delete(studentRepository.findById(id).get());
     }
 }

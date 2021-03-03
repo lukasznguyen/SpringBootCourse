@@ -1,9 +1,14 @@
 package com.example.SpringBootCourse.student;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class Student {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private Long id;
     private String name;
     private String surname;
